@@ -266,5 +266,5 @@ haproxy_keepalived_internal_interface: br-mgmt
 #haproxy_keepalived_internal_interface: bond0.11
 
 #haproxy_ssl_self_signed_regen: true
-haproxy_user_ssl_cert: /etc/ssl/certs/tcmc-selfsigned.crt
-haproxy_user_ssl_key: /etc/ssl/private/tcmc-selfsigned.key
+haproxy_user_ssl_cert: /etc/ssl/certs/tcmc.cloud-selfsigned.crt
+haproxy_user_ssl_key: /etc/ssl/private/tcmc.cloud-selfsigned.key
