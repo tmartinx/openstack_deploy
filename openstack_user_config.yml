@@ -90,13 +90,13 @@ ceph-mon_hosts:
     ip: 172.29.236.23
 
 ## ceph-rgw containers
-#ceph-rgw_hosts:
-#  vuceph-1:
-#    ip: 172.29.236.21
-#  vuceph-2:
-#    ip: 172.29.236.22
-#  vuceph-3:
-#    ip: 172.29.236.23
+ceph-rgw_hosts:
+  vucmon-1:
+    ip: 172.29.236.21
+  vucmon-2:
+    ip: 172.29.236.22
+  vucmon-3:
+    ip: 172.29.236.23
 
 # ceph-osd
 ceph-osd_hosts:
