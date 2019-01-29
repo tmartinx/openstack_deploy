@@ -167,34 +167,10 @@ storage-infra_hosts:
 image_hosts:
   vuosctrl-1:
     ip: 172.29.236.31
-#    container_vars:
-#      limit_container_types: glance
-#      glance_nfs_client:
-#        - server: "172.29.244.40"
-#          remote_path: "/glance"
-#          local_path: "/var/lib/glance/images"
-#          type: "nfs"
-#          options: "_netdev,auto"
   vuosctrl-2:
     ip: 172.29.236.32
-#    container_vars:
-#      limit_container_types: glance
-#      glance_nfs_client:
-#        - server: "172.29.244.40"
-#          remote_path: "/glance"
-#          local_path: "/var/lib/glance/images"
-#          type: "nfs"
-#          options: "_netdev,auto"
   vuosctrl-3:
     ip: 172.29.236.33
-#    container_vars:
-#      limit_container_types: glance
-#      glance_nfs_client:
-#        - server: "172.29.244.40"
-#          remote_path: "/glance"
-#          local_path: "/var/lib/glance/images"
-#          type: "nfs"
-#          options: "_netdev,auto"
 
 # nova api, conductor, etc services
 compute-infra_hosts:
