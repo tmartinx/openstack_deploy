@@ -235,6 +235,15 @@ metrics_hosts:
   vuosctrl-3:
     ip: 172.29.236.33
 
+## designate hosts (DNS as a Service)
+dnsaas_hosts:
+  vuosctrl-1:
+    ip: 172.29.236.31
+  vuosctrl-2:
+    ip: 172.29.236.32
+  vuosctrl-3:
+    ip: 172.29.236.33
+
 # nova hypervisors (KVM)
 kvm-compute_hosts:
   c1bb-os-cmpt:

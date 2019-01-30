@@ -268,3 +268,29 @@ haproxy_keepalived_internal_interface: br-mgmt
 #haproxy_ssl_self_signed_regen: true
 haproxy_user_ssl_cert: /etc/ssl/certs/tcmc.cloud-selfsigned.crt
 haproxy_user_ssl_key: /etc/ssl/private/tcmc.cloud-selfsigned.key
+
+## Designate UI Panel
+horizon_enable_designate_ui: True
+
+designate_pools_yaml:
+   - name: "default"
+     description: Default BIND9 Pool
+     attributes: {}
+     ns_records:
+       - hostname: dns.
+         priority: 1
+     nameservers:
+       - host: 172.29.236.10
+         port: 53
+     targets:
+       - type: bind9
+         description: BIND9 Server
+         masters:
+           - host: 172.29.237.10
+             port: 5354
+         options:
+           host: 172.29.236.10
+           port: 53
+           rndc_host: 172.29.236.10
+           rndc_port: 953
+
