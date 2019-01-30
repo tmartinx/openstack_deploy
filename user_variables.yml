@@ -297,3 +297,9 @@ designate_pools_yaml:
            rndc_host: 172.29.236.10
            rndc_port: 953
 
+# rndc keys for authenticating with bind9
+designate_rndc_keys:
+   - name: "rndc-key"
+     file: /etc/designate/rndc.key
+     algorithm: "hmac-md5"
+     secret: "<key>"
