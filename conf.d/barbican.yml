@@ -1,0 +1,8 @@
+---
+key-manager_hosts:
+  vuosctrl-1:
+    ip: 172.29.236.31
+  vuosctrl-2:
+    ip: 172.29.236.32
+  vuosctrl-3:
+    ip: 172.29.236.33
