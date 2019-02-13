@@ -1,24 +1,39 @@
 ---
+
+# Available IPs:
+#
+# IPv4 Block:	172.16.48.0/20
+#
+# Used by OpenStack:
+#
+# br-infra:	172.16.48.0/24
+# br-mgmt:	172.16.49.0/24
+# br-vxlan:	172.16.50.0/24
+# br-storage:	172.16.51.0/24
+# ...
+# Floating IPs:	172.16.62.0/23
+
 cidr_networks:
-  container: 172.29.236.0/22
-  tunnel: 172.29.240.0/22
-  storage: 172.29.244.0/22
+
+  container: 172.16.49.0/24
+  tunnel: 172.16.50.0/24
+  storage: 172.16.51.0/24
 
 used_ips:
-  - "172.29.239.250,172.29.239.254"
-  - "172.29.236.1,172.29.236.100"
-  - "172.29.240.1,172.29.240.100"
-  - "172.29.244.1,172.29.244.100"
+  - "172.16.49.250,172.16.49.254"
+  - "172.16.49.1,172.16.49.64"
+  - "172.16.50.1,172.16.50.64"
+  - "172.16.51.1,172.16.51.64"
 
 #container_tech: nspawn
 
 global_overrides:
 
-#  external_lb_vip_address: os-1.wtl.tcmc.cloud
-#  internal_lb_vip_address: os-internal-1.wtl.tcmc.cloud
+#  external_lb_vip_address: os-1.ca-east-1.tcmc.cloud
+#  internal_lb_vip_address: os-internal-1.ca-east-1.tcmc.cloud
 
-  external_lb_vip_address: 172.29.235.250
-  internal_lb_vip_address: 172.29.239.250
+  external_lb_vip_address: 172.16.48.250
+  internal_lb_vip_address: 172.16.49.250
 
   tunnel_bridge: "br-vxlan"
   management_bridge: "br-mgmt"
@@ -82,60 +97,58 @@ global_overrides:
 
 # ceph-mon containers
 ceph-mon_hosts:
-  vucmon-1:
-    ip: 172.29.236.21
-  vucmon-2:
-    ip: 172.29.236.22
-  vucmon-3:
-    ip: 172.29.236.23
+  vceinfr-1:
+    ip: 172.16.49.21
+  vceinfr-2:
+    ip: 172.16.49.22
+  vceinfr-3:
+    ip: 172.16.49.23
 
-## ceph-rgw containers
+# ceph-rgw containers
 ceph-rgw_hosts:
-  vucmon-1:
-    ip: 172.29.236.21
-  vucmon-2:
-    ip: 172.29.236.22
-  vucmon-3:
-    ip: 172.29.236.23
+  vcerdgw-1:
+    ip: 172.16.49.24
+  vcerdgw-2:
+    ip: 172.16.49.25
+  vcerdgw-3:
+    ip: 172.16.49.26
+
+# ceph-meta containers
+ceph-meta_hosts:
+  vcemeta-1:
+    ip: 172.16.49.27
+  vcemeta-2:
+    ip: 172.16.49.28
+  vcemeta-3:
+    ip: 172.16.49.29
 
 # ceph-osd
 ceph-osd_hosts:
-  c1str1-ucosd:
-    ip: 172.29.236.25
+  c1str1:
+    ip: 172.16.49.30
 
 # galera, memcache, rabbitmq, utility
 shared-infra_hosts:
-  vuosctrl-1:
-    ip: 172.29.236.31
-  vuosctrl-2:
-    ip: 172.29.236.32
-  vuosctrl-3:
-    ip: 172.29.236.33
+  vosctrl-1:
+    ip: 172.16.49.1
+  vosctrl-2:
+    ip: 172.16.49.2
+  vosctrl-3:
+    ip: 172.16.49.3
 
 # repository (apt cache, python packages, etc)
 repo-infra_hosts:
-  vuosctrl-1:
-    ip: 172.29.236.31
-  vuosctrl-2:
-    ip: 172.29.236.32
-  vuosctrl-3:
-    ip: 172.29.236.33
-
-# load balancer
-# Ideally the load balancer should not use the Infrastructure hosts.
-# Dedicated hardware is best for improved performance and security.
-haproxy_hosts:
-  vuosctrl-1:
-    ip: 172.29.236.31
-  vuosctrl-2:
-    ip: 172.29.236.32
-  vuosctrl-3:
-    ip: 172.29.236.33
+  vosctrl-1:
+    ip: 172.16.49.1
+  vosctrl-2:
+    ip: 172.16.49.2
+  vosctrl-3:
+    ip: 172.16.49.3
 
 # rsyslog server
 log_hosts:
-  vuoslog-1:
-    ip: 172.29.236.29
+  voslog-1:
+    ip: 172.16.49.10
 
 ###
 ### OpenStack
@@ -143,21 +156,12 @@ log_hosts:
 
 # keystone
 identity_hosts:
-  vuosctrl-1:
-    ip: 172.29.236.31
-  vuosctrl-2:
-    ip: 172.29.236.32
-  vuosctrl-3:
-    ip: 172.29.236.33
-
-# cinder api services
-storage-infra_hosts:
-  vuosctrl-1:
-    ip: 172.29.236.31
-  vuosctrl-2:
-    ip: 172.29.236.32
-  vuosctrl-3:
-    ip: 172.29.236.33
+  vosctrl-1:
+    ip: 172.16.49.1
+  vosctrl-2:
+    ip: 172.16.49.2
+  vosctrl-3:
+    ip: 172.16.49.3
 
 # glance
 # The settings here are repeated for each infra host.
@@ -165,193 +169,27 @@ storage-infra_hosts:
 # user_variables, but are left here to illustrate that
 # each container could have different storage targets.
 image_hosts:
-  vuosctrl-1:
-    ip: 172.29.236.31
-  vuosctrl-2:
-    ip: 172.29.236.32
-  vuosctrl-3:
-    ip: 172.29.236.33
-
-# nova api, conductor, etc services
-compute-infra_hosts:
-  vuosctrl-1:
-    ip: 172.29.236.31
-  vuosctrl-2:
-    ip: 172.29.236.32
-  vuosctrl-3:
-    ip: 172.29.236.33
-
-# heat
-orchestration_hosts:
-  vuosctrl-1:
-    ip: 172.29.236.31
-  vuosctrl-2:
-    ip: 172.29.236.32
-  vuosctrl-3:
-    ip: 172.29.236.33
+  vosctrl-1:
+    ip: 172.16.49.1
+  vosctrl-2:
+    ip: 172.16.49.2
+  vosctrl-3:
+    ip: 172.16.49.3
 
 # horizon
 dashboard_hosts:
-  vuosctrl-1:
-    ip: 172.29.236.31
-  vuosctrl-2:
-    ip: 172.29.236.32
-  vuosctrl-3:
-    ip: 172.29.236.33
+  vosctrl-1:
+    ip: 172.16.49.1
+  vosctrl-2:
+    ip: 172.16.49.2
+  vosctrl-3:
+    ip: 172.16.49.3
 
-# neutron agents (L3, DHCP, etc)
-network_hosts:
-  c1bb-os-cmpt:
-    ip: 172.29.236.41
-  c2bb-os-cmpt:
-    ip: 172.29.236.42
-  c3bb-os-cmpt:
-    ip: 172.29.236.43
-
-## ceilometer (telemetry API)
-metering-infra_hosts:
-  vuosctrl-1:
-    ip: 172.29.236.31
-  vuosctrl-2:
-    ip: 172.29.236.32
-  vuosctrl-3:
-    ip: 172.29.236.33
-
-## aodh (telemetry alarm service)
-metering-alarm_hosts:
-  vuosctrl-1:
-    ip: 172.29.236.31
-  vuosctrl-2:
-    ip: 172.29.236.32
-  vuosctrl-3:
-    ip: 172.29.236.33
-
-## gnocchi (telemetry metrics storage)
+# gnocchi (telemetry metrics storage)
 metrics_hosts:
-  vuosctrl-1:
-    ip: 172.29.236.31
-  vuosctrl-2:
-    ip: 172.29.236.32
-  vuosctrl-3:
-    ip: 172.29.236.33
-
-## designate hosts (DNS as a Service)
-dnsaas_hosts:
-  vuosctrl-1:
-    ip: 172.29.236.31
-  vuosctrl-2:
-    ip: 172.29.236.32
-  vuosctrl-3:
-    ip: 172.29.236.33
-
-# nova hypervisors (KVM)
-kvm-compute_hosts:
-  c1bb-os-cmpt:
-    ip: 172.29.236.41
-  c2bb-os-cmpt:
-    ip: 172.29.236.42
-  c3bb-os-cmpt:
-    ip: 172.29.236.43
-
-## nova hypervisors (LXD)
-lxd-compute_hosts:
-  vuoscmpt-lxd-1:
-    ip: 172.29.236.51
-  vuoscmpt-lxd-2:
-    ip: 172.29.236.52
-  vuoscmpt-lxd-3:
-    ip: 172.29.236.53
-
-## ceilometer compute agent (telemetry)
-#metering-compute_hosts:
-#  c1bb-os-cmpt:
-#    ip: 172.29.236.41
-#  c2bb-os-cmpt:
-#    ip: 172.29.236.42
-#  c3bb-os-cmpt:
-#    ip: 172.29.236.43
-#  vuoscmpt-lxd-1:
-#    ip: 172.29.236.51
-#  vuoscmpt-lxd-2:
-#    ip: 172.29.236.52
-#  vuoscmpt-lxd-3:
-#    ip: 172.29.236.53
-
-# cinder volume hosts (iSCSI-backed)
-# The settings here are repeated for each infra host.
-# They could instead be applied as global settings in
-# user_variables, but are left here to illustrate that
-# each container could have different storage targets.
-storage_hosts:
-
-#  vuoscvol-1:
-#    ip: 172.29.236.28
-#    container_vars:
-#      cinder_backends:
-#        limit_container_types: cinder_volume
-#        lvm:
-#          volume_group: cinder-volumes
-#          volume_driver: cinder.volume.drivers.lvm.LVMVolumeDriver
-#          volume_backend_name: LVM_iSCSI
-#          iscsi_ip_address: "172.29.244.28"
-
-# Use the ceph RBD backend in availability zone 'cinderAZ_3':
-#     container_vars:
-#       cinder_storage_availability_zone: cinderAZ_3
-#       cinder_default_availability_zone: cinderAZ_1
-#       cinder_backends:
-#         limit_container_types: cinder_volume
-#         volumes_hdd:
-#           volume_driver: cinder.volume.drivers.rbd.RBDDriver
-#           rbd_pool: volumes_hdd
-#           rbd_ceph_conf: /etc/ceph/ceph.conf
-#           rbd_flatten_volume_from_snapshot: 'false'
-#           rbd_max_clone_depth: 5
-#           rbd_store_chunk_size: 4
-#           rados_connect_timeout: -1
-#           volume_backend_name: volumes_hdd
-#           rbd_user: "{{ cinder_ceph_client }}"
-#           rbd_secret_uuid: "{{ cinder_ceph_client_uuid }}"
-
-  vuosctrl-1:
-    ip: 172.29.236.31
-    container_vars:
-      cinder_backends:
-        limit_container_types: cinder_volume
-        rbd:
-          volume_group: volumes
-          volume_driver: cinder.volume.drivers.rbd.RBDDriver
-          volume_backend_name: rbd
-          rbd_pool: volumes
-          rbd_user: "{{ cinder_ceph_client }}"
-          rbd_secret_uuid: "{{ cinder_ceph_client_uuid }}"
-          rbd_ceph_conf: /etc/ceph/ceph.conf
-
-  vuosctrl-2:
-    ip: 172.29.236.32
-    container_vars:
-      cinder_backends:
-        limit_container_types: cinder_volume
-        rbd:
-          volume_group: volumes
-          volume_driver: cinder.volume.drivers.rbd.RBDDriver
-          volume_backend_name: rbd
-          rbd_pool: volumes
-          rbd_user: "{{ cinder_ceph_client }}"
-          rbd_secret_uuid: "{{ cinder_ceph_client_uuid }}"
-          rbd_ceph_conf: /etc/ceph/ceph.conf
-
-  vuosctrl-3:
-    ip: 172.29.236.33
-    container_vars:
-      cinder_backends:
-        limit_container_types: cinder_volume
-        rbd:
-          volume_group: volumes
-          volume_driver: cinder.volume.drivers.rbd.RBDDriver
-          volume_backend_name: rbd
-          rbd_pool: volumes
-          rbd_user: "{{ cinder_ceph_client }}"
-          rbd_secret_uuid: "{{ cinder_ceph_client_uuid }}"
-          rbd_ceph_conf: /etc/ceph/ceph.conf
-
+  vosctrl-1:
+    ip: 172.16.49.1
+  vosctrl-2:
+    ip: 172.16.49.2
+  vosctrl-3:
+    ip: 172.16.49.3

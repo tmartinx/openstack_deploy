@@ -13,6 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+###
+### This file contains commonly used overrides for convenience. Please inspect
+### the defaults for each role to find additional override options.
+###
+
 ## ceph-ansible settings
 
 ## Ceph cluster fsid (must be generated before first run)
@@ -22,9 +27,9 @@ fsid: d04d54d9-d2c0-48e1-a9f0-ef792b7ad985 # Replace with your generated UUID
 
 ## See https://github.com/ceph/ceph-ansible/tree/master/group_vars for
 ## additional configuration options availble.
-monitor_address_block: "172.29.236.0/22"
-public_network: "172.29.236.0/22"
-cluster_network: "172.29.244.0/22"
+monitor_address_block: "172.16.49.0/24"
+public_network: "172.16.49.0/24"
+cluster_network: "172.16.51.0/24"
 osd_scenario: lvm
 journal_size: 10240 # size in MB
 
@@ -98,7 +103,7 @@ dummy:
 # An easier way to handle this is to use the environment variable CEPH_ARGS
 # So run: "export CEPH_ARGS="--cluster foo"
 # With that you will be able to run "ceph health" normally
-#cluster: ceph
+cluster: ceph
 
 # Inventory host group variables
 #mon_group_name: ceph-mon_hosts
@@ -193,18 +198,18 @@ osd_group_name: ceph-osd_hosts
 #  you will get whatever version of Ceph is included in your Linux distro.
 # 'local' means that the ceph binaries will be copied over from the local machine
 ceph_origin: distro
-valid_ceph_origins:
+#valid_ceph_origins:
 #  - repository
-  - distro
+#  - distro
 #  - local
 
 
 #ceph_repository: dummy
-valid_ceph_repository:
+#valid_ceph_repository:
 #  - community
 #  - rhcs
 #  - dev
-  - uca
+#  - uca
 #  - custom
 #  - obs
 
@@ -270,9 +275,9 @@ valid_ceph_repository:
 # usually has newer Ceph releases than the normal distro repository.
 #
 #
-ceph_stable_repo_uca: "http://ubuntu-cloud.archive.canonical.com/ubuntu"
-ceph_stable_openstack_release_uca: rocky
-ceph_stable_release_uca: "{{ansible_lsb.codename}}-updates/{{ceph_stable_openstack_release_uca}}"
+#ceph_stable_repo_uca: "http://ubuntu-cloud.archive.canonical.com/ubuntu"
+#ceph_stable_openstack_release_uca: rocky
+#ceph_stable_release_uca: "{{ansible_lsb.codename}}-updates/{{ceph_stable_openstack_release_uca}}"
 
 # REPOSITORY: openSUSE OBS
 #
@@ -675,7 +680,9 @@ osd_objectstore: bluestore
 lvm_volumes:
   - data: /dev/sda
   - data: /dev/sdb
-  - data: /dev/sdc
+
+
+#  - data: /dev/sdc
 
 #dedicated_devices:
 #   - /dev/sda

@@ -157,7 +157,7 @@ install_method: source
 #
 # Uncomment this to disable keepalived installation (cf. documentation)
 # haproxy_use_keepalived: False
-#
+
 # HAProxy Keepalived configuration (cf. documentation)
 # Make sure that this is set correctly according to the CIDR used for your
 # internal and external addresses.
@@ -180,40 +180,51 @@ install_method: source
 # Keepalived default IP address used to check its alive status (IPv4 only)
 # keepalived_ping_address: "193.0.14.129"
 
-
-
 # CUSTOM:
 
-# ---
 # This file contains an example of the global variable overrides      
 # which may need to be set for a production environment.              
 
 ## Load Balancer Configuration (haproxy/keepalived)
+haproxy_keepalived_external_vip_cidr: "172.16.48.250/24"
+haproxy_keepalived_internal_vip_cidr: "172.16.49.250/24"
+
+haproxy_keepalived_external_interface: br-infra
+haproxy_keepalived_internal_interface: br-mgmt
+
+haproxy_ssl_self_signed_regen: False
+haproxy_user_ssl_cert: /etc/ssl/certs/tcmc-selfsigned.crt
+haproxy_user_ssl_key: /etc/ssl/private/tcmc-selfsigned.key
 
 lxc_cache_prep_timeout: 5400
 
-openstack_domain: "wtl.tcmc.cloud"
-dhcp_domain: "wtl.tcmc.cloud"
+horizon_keystone_multidomain_support: True
+horizon_keystone_multidomain_dropdown: True
 
-service_region: "wtl"
-                                                                      
+## Designate UI Panel
+horizon_enable_designate_ui: True
+
+openstack_domain: "ca-east-1.tcmc.cloud"
+dhcp_domain: "ca-east-1.tcmc.cloud"
+
+service_region: "ca-east-1"
+
 nova_nova_conf_overrides:
   DEFAULT:
     force_config_drive: true
     resume_guests_state_on_host_boot: true
-#    cpu_allocation_ratio: 2.0
-#    disk_allocation_ratio: 10.0
-#    ram_allocation_ratio: 2.0
-#    reserved_host_disk_mb
-#    reserved_host_memory_mb
+#    cpu_allocation_ratio: 16.0
+#    disk_allocation_ratio: 4.0
+#  filter_scheduler:
+#    ram_weight_multiplier: 2.0
 
 #openstack_host_specific_kernel_modules:                               
-#  - name: "openvswitch"                                               
-#    pattern: "CONFIG_OPENVSWITCH"                                    
-#    group: "network_hosts"                                            
+#  - name: "openvswitch"
+#    pattern: "CONFIG_OPENVSWITCH"
+#    group: "network_hosts"
 
-### Neutron specific config                                           
-#neutron_plugin_type: ml2.ovs                                          
+### Neutron specific config
+#neutron_plugin_type: ml2.ovs
 #neutron_ml2_drivers_type: "vxlan,vlan,local"
 neutron_plugin_type: ml2.lxb
 neutron_ml2_drivers_type: "vxlan,local,flat,vlan"
@@ -255,26 +266,6 @@ neutron_plugin_base:
    - neutron_lbaas.services.loadbalancer.plugin.LoadBalancerPluginv2  
    - neutron_dynamic_routing.services.bgp.bgp_plugin.BgpPlugin
 
-# HAProxy Settings:
-haproxy_keepalived_external_vip_cidr: "172.29.235.250/22"
-haproxy_keepalived_internal_vip_cidr: "172.29.239.250/22"
-
-haproxy_keepalived_external_interface: br-public
-haproxy_keepalived_internal_interface: br-mgmt
-
-#haproxy_keepalived_external_interface: bond0.10
-#haproxy_keepalived_internal_interface: bond0.11
-
-#haproxy_ssl_self_signed_regen: true
-haproxy_user_ssl_cert: /etc/ssl/certs/tcmc.cloud-selfsigned.crt
-haproxy_user_ssl_key: /etc/ssl/private/tcmc.cloud-selfsigned.key
-
-horizon_keystone_multidomain_support: True
-horizon_keystone_multidomain_dropdown: True
-
-## Designate UI Panel
-horizon_enable_designate_ui: True
-
 designate_pools_yaml:
    - name: "default"
      description: Default BIND9 Pool
@@ -283,18 +274,18 @@ designate_pools_yaml:
        - hostname: dns.
          priority: 1
      nameservers:
-       - host: 172.29.236.10
+       - host: 172.16.49.10
          port: 53
      targets:
        - type: bind9
          description: BIND9 Server
          masters:
-           - host: 172.29.237.10
+           - host: 172.16.34.10
              port: 5354
          options:
-           host: 172.29.236.10
+           host: 172.16.49.10
            port: 53
-           rndc_host: 172.29.236.10
+           rndc_host: 172.16.49.10
            rndc_port: 953
 
 # rndc keys for authenticating with bind9

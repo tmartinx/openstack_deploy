@@ -1,5 +1,5 @@
----
-key-manager_hosts:
+# The infra nodes that will be running the magnum services
+magnum-infra_hosts:
   vosctrl-1:
     ip: 172.16.49.1
   vosctrl-2:

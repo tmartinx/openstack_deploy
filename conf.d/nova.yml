@@ -1,0 +1,27 @@
+---
+# nova api, conductor, etc services
+compute-infra_hosts:
+  vosctrl-1:
+    ip: 172.16.49.1
+  vosctrl-2:
+    ip: 172.16.49.2
+  vosctrl-3:
+    ip: 172.16.49.3
+
+# nova hypervisors (KVM)
+kvm-compute_hosts:
+  c1bb-oscmpt:
+    ip: 172.16.49.11
+  c2bb-oscmpt:
+    ip: 172.16.49.12
+  c3bb-oscmpt:
+    ip: 172.16.49.13
+
+## nova hypervisors (LXD)
+lxd-compute_hosts:
+  voscmpt-1:
+    ip: 172.16.49.18
+  voscmpt-2:
+    ip: 172.16.49.19
+  voscmpt-3:
+    ip: 172.16.49.20

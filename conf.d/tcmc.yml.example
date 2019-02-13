@@ -1,0 +1,4 @@
+---
+tcmc-infra_hosts:
+  vtcmc-1:
+    ip: 172.16.49.64

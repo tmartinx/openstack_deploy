@@ -1,3 +1,4 @@
+*.swp
 user_secrets.yml
 ansible_facts
 backup_openstack_inventory.tar

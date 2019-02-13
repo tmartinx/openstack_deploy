@@ -1,0 +1,96 @@
+---
+# cinder api services
+storage-infra_hosts:
+  vosctrl-1:
+    ip: 172.16.49.1
+  vosctrl-2:
+    ip: 172.16.49.2
+  vosctrl-3:
+    ip: 172.16.49.3
+#  alternate-srv-1:
+#    ip: 172.16.49.5
+#    container_vars:
+#      cinder_qos_specs:
+#        - name: low-iops
+#          options:
+#            consumer: front-end
+#            read_iops_sec: 75
+#            write_iops_sec: 75
+#          cinder_volume_types:
+#            - low-iops
+#        - name: high-iops
+#          options:
+#            consumer: front-end
+#            read_iops_sec: 150
+#            write_iops_sec: 150
+#          cinder_volume_types:
+#            - high-iops
+#        - name: ultra-high-iops
+#          options:
+#            consumer: front-end
+#            read_iops_sec: 300
+#            write_iops_sec: 300
+#          cinder_volume_types:
+#            - ultra-high-iops
+
+storage_hosts:
+  vosctrl-1:
+    ip: 172.16.49.1
+    container_vars:
+      cinder_backends:
+        limit_container_types: cinder_volume
+        rbd:
+          volume_group: volumes
+          volume_driver: cinder.volume.drivers.rbd.RBDDriver
+          volume_backend_name: rbd
+          rbd_pool: volumes
+          rbd_user: "{{ cinder_ceph_client }}"
+          rbd_secret_uuid: "{{ cinder_ceph_client_uuid }}"
+          rbd_ceph_conf: /etc/ceph/ceph.conf
+  vosctrl-2:
+    ip: 172.16.49.2
+    container_vars:
+      cinder_backends:
+        limit_container_types: cinder_volume
+        rbd:
+          volume_group: volumes
+          volume_driver: cinder.volume.drivers.rbd.RBDDriver
+          volume_backend_name: rbd
+          rbd_pool: volumes
+          rbd_user: "{{ cinder_ceph_client }}"
+          rbd_secret_uuid: "{{ cinder_ceph_client_uuid }}"
+          rbd_ceph_conf: /etc/ceph/ceph.conf
+  vosctrl-3:
+    ip: 172.16.49.3
+    container_vars:
+      cinder_backends:
+        limit_container_types: cinder_volume
+        rbd:
+          volume_group: volumes
+          volume_driver: cinder.volume.drivers.rbd.RBDDriver
+          volume_backend_name: rbd
+          rbd_pool: volumes
+          rbd_user: "{{ cinder_ceph_client }}"
+          rbd_secret_uuid: "{{ cinder_ceph_client_uuid }}"
+          rbd_ceph_conf: /etc/ceph/ceph.conf
+
+# cinder volume hosts (iSCSI-backed)
+# The settings here are repeated for each infra host.
+# They could instead be applied as global settings in
+# user_variables, but are left here to illustrate that
+# each container could have different storage targets.
+#  vucvol-1:
+#    ip: 172.16.49.100
+#    container_vars:
+#      cinder_backends:
+#        limit_container_types: cinder_volume
+#        lvm:
+#          volume_group: cinder-volumes
+#          volume_driver: cinder.volume.drivers.lvm.LVMVolumeDriver
+#          volume_backend_name: LVM_iSCSI
+#          iscsi_ip_address: "172.29.244.100"
+#          lvm_type: "thin"
+#          extra_volume_types:
+#            - low-iops
+#            - high-iops
+#            - ultra-high-iops
